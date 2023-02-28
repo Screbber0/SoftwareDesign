@@ -1,6 +1,7 @@
 package chesnokov.model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,8 +12,10 @@ public class RandomBook {
     private final List<String> titleList;
     private final List<String> authorList;
 
-    private final String authorPath = "src/main/resources/authors.txt";
-    private final String titlePath = "src/main/resources/titles.txt";
+    private final String authorPath = "src" + File.separator +"main" + File.separator +"resources"
+            + File.separator + "authors.txt";
+    private final String titlePath =  "src" + File.separator +"main" + File.separator +"resources"
+            + File.separator + "titles.txt";
     private final BufferedReader authorBufferedReader;
     private final BufferedReader titleBufferedReader;
 
