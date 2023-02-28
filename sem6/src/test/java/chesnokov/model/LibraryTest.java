@@ -1,8 +1,9 @@
 package chesnokov.model;
 
-import org.junit.Assert;
-import org.junit.Test;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -35,6 +36,8 @@ public class LibraryTest {
     }
 
     @Test
+    @DisplayName("Проверяем на добавление 2х одинаковых книг в библиотеку," +
+            "ожидаем, одну книгу в мапе с количеством 2")
     public void test_add_two_same_books_to_empty_library_expect_one_book_with_Integer_2() {
         Library library = new Library();
         Assertions.assertEquals(Collections.EMPTY_MAP, library.getAllBooks(), EMPTY_MESSAGE);
@@ -51,7 +54,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void test_remove_book_from_empty_library() {
+    public void test_remove_book_from_empty_library_expect_empty_library() {
         Library library = new Library();
         Assertions.assertEquals(Collections.EMPTY_MAP, library.getAllBooks(), EMPTY_MESSAGE);
         Assertions.assertFalse(library.removeBook(new Book("name", "author")));
@@ -59,6 +62,8 @@ public class LibraryTest {
     }
 
     @Test
+    @DisplayName("Удаляем из библиотеки книгу, присутсвующую в одном экземпляре, ожидаем," +
+            "что этой книги больше не будет в библиотеке")
     public void test_remove_book_existing_in_library() {
         Library library = new Library();
         Assertions.assertEquals(Collections.EMPTY_MAP, library.getAllBooks(), EMPTY_MESSAGE);
@@ -73,6 +78,8 @@ public class LibraryTest {
     }
 
     @Test
+    @DisplayName("Удаляем кнгигу присутвующую в нескольких копиях в библиотеке, ожидаем, " +
+            "что счетчик у книги уменьшится на 1, но сама книга останется в библиотеке")
     public void test_remove_book_existing_in_two_copies_expect_book_with_amount_decrement_one() {
         Library library = new Library();
         Assertions.assertEquals(Collections.EMPTY_MAP, library.getAllBooks(), EMPTY_MESSAGE);
@@ -113,6 +120,6 @@ public class LibraryTest {
         for (Map.Entry<Book, Integer> entry : library.getAllBooks().entrySet()) {
             count += entry.getValue();
         }
-        Assert.assertEquals(amountGenerate, count);
+        Assertions.assertEquals(amountGenerate, count);
     }
 }
