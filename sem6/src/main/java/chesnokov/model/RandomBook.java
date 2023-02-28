@@ -1,7 +1,8 @@
 package chesnokov.model;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,12 +16,7 @@ public class RandomBook {
     private final BufferedReader authorBufferedReader;
     private final BufferedReader titleBufferedReader;
 
-    //TODO: подумать про try/catch и про ресурсы
     public RandomBook() throws IOException {
-//        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-//        InputStream is = classloader.getResourceAsStream("titles.txt");
-//        InputStreamReader inputStreamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
-//        authorBufferedReader = new BufferedReader(inputStreamReader);
         authorBufferedReader = new BufferedReader(new FileReader(authorPath));
         titleBufferedReader = new BufferedReader(new FileReader(titlePath));
         titleList = readAllTitles();

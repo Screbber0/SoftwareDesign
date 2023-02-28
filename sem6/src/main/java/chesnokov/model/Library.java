@@ -2,30 +2,52 @@ package chesnokov.model;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class Library {
-    private final List<Book> books;
+public class Library implements BookStorage {
+    /**
+     * Хранилище книг, где пара книга - кол-во вхождений, TreeMap используется для сортировки книг
+     * сначала по автору, потом по названию
+     */
+    private final Map<Book, Integer> treeBookMap = new TreeMap<>();
 
-    public Library() throws IOException {
-        books = new BooksFromTXT().getBookList(10);
+    public void generateRandomBooks(Integer amountGenerate) throws IOException {
+        List<Book> randomBookList = new RandomBook().getBookList(amountGenerate);
+        addBookList(randomBookList);
     }
 
-    public List<Book> getBookList(String title) {
-        return books.stream()
-                .filter(book -> book.getTitle().equals(title))
-                .toList();
-    }
-
+    @Override
     public void addBook(Book book) {
-        books.add(book);
+        if (!treeBookMap.containsKey(book)) {
+            treeBookMap.put(book, 1);
+        } else {
+            treeBookMap.put(book, treeBookMap.get(book) + 1);
+        }
     }
 
-    public void removeBook(Book book) {
-        books.remove(book);
+    public void addBookList(List<Book> bookList) {
+        for (Book book : bookList) {
+            addBook(book);
+        }
     }
 
-    public List<Book> getAllBooks() {
-        return books;
+    @Override
+    public boolean removeBook(Book book) {
+        if (treeBookMap.get(book) == null) {
+            return false;
+        }
+        if (treeBookMap.get(book) == 1) {
+            treeBookMap.remove(book);
+        } else {
+            treeBookMap.put(book, treeBookMap.get(book) - 1);
+        }
+        return true;
+    }
+
+    @Override
+    public Map<Book, Integer> getAllBooks() {
+        return treeBookMap;
     }
 
 }
